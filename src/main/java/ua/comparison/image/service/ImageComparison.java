@@ -1,4 +1,4 @@
-package ua.comparison.image;
+package ua.comparison.image.service;
 
 import ua.comparison.image.model.Rectangle;
 
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static java.awt.Color.RED;
-import static ua.comparison.image.ImageComparisonTools.*;
 
 public class ImageComparison {
 
@@ -32,26 +31,26 @@ public class ImageComparison {
     private final BufferedImage image2;
     private int[][] matrix;
 
-    ImageComparison( String image1Name, String image2Name ) throws IOException, URISyntaxException {
-        image1 = readImageFromResources( image1Name );
-        image2 = readImageFromResources( image2Name );
-        matrix = populateTheMatrixOfTheDifferences( image1, image2 );
+    public ImageComparison(String image1Name, String image2Name) throws IOException, URISyntaxException {
+        image1 = ImageComparisonTools.readImageFromResources( image1Name );
+        image2 = ImageComparisonTools.readImageFromResources( image2Name );
+        matrix = ImageComparisonTools.populateTheMatrixOfTheDifferences( image1, image2 );
     }
 
     public static void main( String[] args ) throws IOException, URISyntaxException {
         ImageComparison comparison = new ImageComparison( "image1.png", "image2.png" );
-        createGUI( comparison.compareImages() );
+        ImageComparisonTools.createGUI( comparison.compareImages() );
     }
 
     /**
      * Draw rectangles which cover the regions of the difference pixels.
      * @return the result of the drawing.
      */
-    BufferedImage compareImages() throws IOException, URISyntaxException {
+    public BufferedImage compareImages() throws IOException, URISyntaxException {
         // check images for valid
-        checkCorrectImageSize( image1, image2 );
+        ImageComparisonTools.checkCorrectImageSize( image1, image2 );
 
-        BufferedImage outImg = deepCopy( image2 );
+        BufferedImage outImg = ImageComparisonTools.deepCopy( image2 );
 
         Graphics2D graphics = outImg.createGraphics();
         graphics.setColor( RED );
@@ -60,7 +59,7 @@ public class ImageComparison {
         drawRectangles( graphics );
 
         //save the image:
-        saveImage( "build/result2.png", outImg );
+        ImageComparisonTools.saveImage( "build/result2.png", outImg );
 
         return outImg;
     }
@@ -72,7 +71,7 @@ public class ImageComparison {
     private void drawRectangles( Graphics2D graphics ) {
         if( counter > regionCount ) return;
 
-        Rectangle rectangle = createRectangle( matrix, counter );
+        Rectangle rectangle = ImageComparisonTools.createRectangle( matrix, counter );
 
         graphics.drawRect( rectangle.getMinY(), rectangle.getMinX(), rectangle.getWidth(), rectangle.getHeight() );
         counter++;

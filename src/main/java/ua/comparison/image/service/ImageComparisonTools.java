@@ -1,4 +1,4 @@
-package ua.comparison.image;
+package ua.comparison.image.service;
 
 import ua.comparison.image.model.Rectangle;
 

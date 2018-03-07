@@ -1,11 +1,12 @@
 package ua.comparison.image;
 
 import static org.junit.Assert.assertEquals;
-import static ua.comparison.image.ImageComparisonTools.createGUI;
-import static ua.comparison.image.ImageComparisonTools.readImageFromResources;
+import static ua.comparison.image.service.ImageComparisonTools.createGUI;
+import static ua.comparison.image.service.ImageComparisonTools.readImageFromResources;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ua.comparison.image.service.ImageComparisonTools;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
