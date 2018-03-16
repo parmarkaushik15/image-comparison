@@ -28,4 +28,4 @@ jacocoTestReport {
 defaultTasks << 'clean'
 defaultTasks << 'build'
 
-mainClassName = "ua.comparison.image.ImageComparison"
+mainClassName = "ua.comparison.image.javafx.Main"

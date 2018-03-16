@@ -2,7 +2,7 @@
 
 ##############################################################################
 ##
-##  Executable file for running an application.
+##  Executable file for running Image Comparison App.
 ##
 ##############################################################################
 
