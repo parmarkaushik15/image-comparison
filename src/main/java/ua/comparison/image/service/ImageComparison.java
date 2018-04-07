@@ -27,39 +27,39 @@ public class ImageComparison {
      */
     private int regionCount = counter;
 
-    private final BufferedImage image1;
-    private final BufferedImage image2;
+    private BufferedImage image1;
+    private BufferedImage image2;
     private int[][] matrix;
 
-    public ImageComparison(String image1Name, String image2Name) throws IOException, URISyntaxException {
-        image1 = ImageComparisonTools.readImageFromResources( image1Name );
-        image2 = ImageComparisonTools.readImageFromResources( image2Name );
-        matrix = ImageComparisonTools.populateTheMatrixOfTheDifferences( image1, image2 );
+    public ImageComparison() throws IOException, URISyntaxException {
     }
 
-    public static void main( String[] args ) throws IOException, URISyntaxException {
-        ImageComparison comparison = new ImageComparison( "image1.png", "image2.png" );
-        ImageComparisonTools.createGUI( comparison.compareImages() );
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        ImageComparison comparison = new ImageComparison();
+        ImageComparisonTools.createGUI(comparison.compareImages("image1.png", "image2.png"));
     }
 
     /**
      * Draw rectangles which cover the regions of the difference pixels.
      * @return the result of the drawing.
      */
-    public BufferedImage compareImages() throws IOException, URISyntaxException {
+    public BufferedImage compareImages(String image1Name, String image2Name) throws IOException, URISyntaxException {
+        image1 = ImageComparisonTools.readImageFromResources(image1Name);
+        image2 = ImageComparisonTools.readImageFromResources(image2Name);
+        matrix = ImageComparisonTools.populateTheMatrixOfTheDifferences(image1, image2);
         // check images for valid
-        ImageComparisonTools.checkCorrectImageSize( image1, image2 );
+        ImageComparisonTools.checkCorrectImageSize(image1, image2);
 
-        BufferedImage outImg = ImageComparisonTools.deepCopy( image2 );
+        BufferedImage outImg = ImageComparisonTools.copyImage(image2);
 
         Graphics2D graphics = outImg.createGraphics();
-        graphics.setColor( RED );
+        graphics.setColor(RED);
 
         groupRegions();
-        drawRectangles( graphics );
+        drawRectangles(graphics);
 
         //save the image:
-        ImageComparisonTools.saveImage( "build/result2.png", outImg );
+        ImageComparisonTools.saveImage("build/result2.png", outImg);
 
         return outImg;
     }
@@ -68,24 +68,24 @@ public class ImageComparison {
      * Draw rectangles with the differences pixels.
      * @param graphics the Graphics2D object for drawing rectangles.
      */
-    private void drawRectangles( Graphics2D graphics ) {
-        if( counter > regionCount ) return;
+    private void drawRectangles(Graphics2D graphics) {
+        if(counter > regionCount) return;
 
-        Rectangle rectangle = ImageComparisonTools.createRectangle( matrix, counter );
+        Rectangle rectangle = ImageComparisonTools.createRectangle(matrix, counter);
 
-        graphics.drawRect( rectangle.getMinY(), rectangle.getMinX(), rectangle.getWidth(), rectangle.getHeight() );
+        graphics.drawRect(rectangle.getMinY(), rectangle.getMinX(), rectangle.getWidth(), rectangle.getHeight());
         counter++;
-        drawRectangles( graphics );
+        drawRectangles(graphics);
     }
 
     /**
      * Group rectangle regions in binary matrix.
      */
     private void groupRegions() {
-        for ( int row = 0; row < matrix.length; row++ ) {
-            for ( int col = 0; col < matrix[row].length; col++ ) {
-                if ( matrix[row][col] == 1 ) {
-                    joinToRegion( row, col );
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[row].length; col++) {
+                if (matrix[row][col] == 1) {
+                    joinToRegion(row, col);
                     regionCount++;
                 }
             }
@@ -99,22 +99,22 @@ public class ImageComparison {
      * @param row the value of the row.
      * @param col the value of the column.
      */
-    private void joinToRegion( int row, int col ) {
-        if ( row < 0 || row >= matrix.length || col < 0 || col >= matrix[row].length || matrix[row][col] != 1 ) return;
+    private void joinToRegion(int row, int col) {
+        if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[row].length || matrix[row][col] != 1) return;
 
         matrix[row][col] = regionCount;
 
-        for ( int i = 0; i < threshold; i++ ) {
+        for (int i = 0; i < threshold; i++) {
             // goes to all directions.
-            joinToRegion( row - 1 - i, col );
-            joinToRegion( row + 1 + i, col );
-            joinToRegion( row, col - 1 - i );
-            joinToRegion( row, col + 1 + i );
+            joinToRegion(row - 1 - i, col);
+            joinToRegion(row + 1 + i, col);
+            joinToRegion(row, col - 1 - i);
+            joinToRegion(row, col + 1 + i);
 
-            joinToRegion( row - 1 - i, col - 1 - i );
-            joinToRegion( row + 1 + i, col - 1 - i );
-            joinToRegion( row - 1 - i, col + 1 + i );
-            joinToRegion( row + 1 + i, col + 1 + i );
+            joinToRegion(row - 1 - i, col - 1 - i);
+            joinToRegion(row + 1 + i, col - 1 - i);
+            joinToRegion(row - 1 - i, col + 1 + i);
+            joinToRegion(row + 1 + i, col + 1 + i);
         }
     }
 }

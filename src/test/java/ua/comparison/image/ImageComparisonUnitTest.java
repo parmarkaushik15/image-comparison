@@ -9,7 +9,8 @@ import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ua.comparison.image.service.ImageComparisonTools.*;
+import static ua.comparison.image.service.ImageComparisonTools.isDifferent;
+import static ua.comparison.image.service.ImageComparisonTools.readImageFromResources;
 
 
 /**
