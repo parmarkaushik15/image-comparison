@@ -19,7 +19,7 @@ public interface ComparisonToolsService {
      * @param path the path where contains image.
      * @return the {@code BufferedImage} object of this specific image.
      */
-    BufferedImage readImageFromResources(String path);
+    BufferedImage readImageFromResources(String path) throws URISyntaxException, IOException;
 
     /**
      * Make a copy of the {@code BufferedImage} object.
@@ -33,5 +33,5 @@ public interface ComparisonToolsService {
      * @param path the path to the saving image.
      * @param image the {@code BufferedImage} object of this specific image.
      */
-    void saveImage(String path, BufferedImage image);
+    void saveImage(String path, BufferedImage image) throws IOException;
 }
