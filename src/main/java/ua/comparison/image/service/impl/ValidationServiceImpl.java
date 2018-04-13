@@ -1,4 +1,6 @@
-package ua.comparison.image.service;
+package ua.comparison.image.service.impl;
+
+import ua.comparison.image.service.ValidationService;
 
 import java.awt.image.BufferedImage;
 

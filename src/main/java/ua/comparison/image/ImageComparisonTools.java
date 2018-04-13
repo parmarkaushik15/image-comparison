@@ -1,4 +1,4 @@
-package ua.comparison.image.service;
+package ua.comparison.image;
 
 import ua.comparison.image.model.Rectangle;
 
@@ -39,7 +39,7 @@ public class ImageComparisonTools {
      * @param image the provided image.
      * @return copy of the provided image.
      */
-    static BufferedImage copyImage(BufferedImage image) {
+    public static BufferedImage copyImage(BufferedImage image) {
         ColorModel cm = image.getColorModel();
         boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
         WritableRaster raster = image.copyData(null);
@@ -107,7 +107,7 @@ public class ImageComparisonTools {
      * @param image2 {@code BufferedImage} object of the second image.
      * @return populated binary matrix.
      */
-    static int[][] populateTheMatrixOfTheDifferences( BufferedImage image1, BufferedImage image2 ) {
+    public static int[][] populateTheMatrixOfTheDifferences( BufferedImage image1, BufferedImage image2 ) {
         int[][] matrix = new int[image1.getWidth()][image1.getHeight()];
         for ( int y = 0; y < image1.getHeight(); y++ ) {
             for ( int x = 0; x < image1.getWidth(); x++ ) {
